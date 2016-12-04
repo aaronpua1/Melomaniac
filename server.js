@@ -114,7 +114,7 @@ io.on('connection', function (socket) {
         }
         // remove username from other clients
 		subscribe.removeListener('message', callback);
-        socket.emit('removeUser', socket.user);
+        io.emit('removeUser', socket.user);
 	});
 
     socket.on('newUser', function(newUsername) {
@@ -125,7 +125,7 @@ io.on('connection', function (socket) {
         // each session has its own username as socket.user
         socket.user = newUsername;
 
-        socket.emit('newUser', newUsername);
+        io.emit('newUser', newUsername);
     });
 	
     // Handle incoming messages

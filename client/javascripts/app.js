@@ -11,7 +11,7 @@ var main = function() {
     field = $('textarea#message');
 
     // Get a reference to the output
-    output = $('div.conversation');
+    output = $('div#conversation');
 
     // Handle message submit
     $('a#submitbutton').on('click', function () {
@@ -19,7 +19,7 @@ var main = function() {
         var msg;
         msg = field.val();
         socket.emit('send', { message: msg });
-		socket.emit('newUser', username);	
+		//socket.emit('newUser', username);	
         field.val('');
     });
 
@@ -49,6 +49,7 @@ var main = function() {
 					document.getElementById('logout').style.display = 'block';
 					document.getElementById('register').style.display = 'none';
 					socket.emit('newUser', username);
+					return false;
 				}
 			}
 		}).done(function(data) {
@@ -65,10 +66,8 @@ var main = function() {
         console.log(response);
     });
 	
-    socket.on('newUser', function(user){
-		username = user;
-		console.log(username);
-        $('#usernameList').append($('<li>').text(username));		
+    socket.on('newUser', function(username){
+        $('#usernameList').append($('<li class="left clearfix">').text(username));		
     });
 
     socket.on('removeUser', function(username){
